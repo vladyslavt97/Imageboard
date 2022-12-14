@@ -2,10 +2,10 @@
     "name": "imageboard",
     "version": "1.0.0",
     "description": "",
-    "main": "server.js",
+    "main": "src/server/server.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "node server.js"
+        "start": "nodemon src/server/server.js"
     },
     "engines": {
         "node": "14.20.1"
@@ -16,7 +16,7 @@
         "aws-sdk": "^2.476.0",
         "dotenv": "^16.0.3",
         "express": "^4.14.0",
-        "multer": "^1.2.0",
+        "multer": "1.4.5-lts.1",
         "spiced-pg": "^1.0.4",
         "uid-safe": "^2.1.4"
     }
