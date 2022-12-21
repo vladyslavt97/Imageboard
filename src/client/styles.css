@@ -1,0 +1,28 @@
+*{box-sizing: border-box; margin: 0; padding: 0;}
+
+.headingClass{
+    color: green;
+}
+body{
+    background-color: antiquewhite;
+}
+
+h1{
+    color: green;
+}
+
+img{
+    width: 100%;
+    border-radius: 25px;
+    border: 2px solid greenyellow;
+}
+ul{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    align-items: center;
+    padding: 20px;
+}
+li{
+    list-style: none;
+}

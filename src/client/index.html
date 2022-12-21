@@ -3,15 +3,28 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <title>Image Board</title>
+        <title>Image Board :)</title>
         <script
             defer
             src="./js/app.js"
             type="module"
             crossorigin="use-credentials"
         ></script>
+        <link rel="stylesheet" href="styles.css">
     </head>
     <body>
+        <div id="main">
+            <!-- v-bind is used for attributes like class, src, href, alt -->
+            <h1 v-bind:class="headingClass">{{ heading }}</h1>
+            <h2>Hi, {{ greeting }}</h2>
+            <ul v-if="images.length > 0">
+                <li v-for="i in images">
+                    <img v-bind:src="i.url" v-bind:alt="images">
+                    <h2>{{i.title}}</h2>
+                </li>
+            </ul>            
+        
+        </div>
 
     </body>
 </html>
