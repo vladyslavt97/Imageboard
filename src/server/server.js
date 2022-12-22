@@ -3,9 +3,10 @@ const express = require("express");
 const app = express();
 require('dotenv').config();
 const { PORT = 3000 } = process.env;
+const { uploader, fileUpload } = require('./file-upload');
 
 const { 
-    // insertIntoImageboardDB, 
+    insertIntoImageboardDB, 
     selectAllDataFromImageboardDB } = require('./db.js');
 
 
@@ -15,10 +16,9 @@ app.use(express.json());
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "../client", "index.html"));
 });
-app.get("/test", (req, res) => {
+app.get("/images", (req, res) => {
     selectAllDataFromImageboardDB()
         .then((data) => {
-            console.log('data', data.rows);
             res.json(data.rows);
         })
         .catch(err=>{
@@ -26,11 +26,25 @@ app.get("/test", (req, res) => {
         });
 });
 
-app.listen(PORT, () => console.log(`I'm listening on port ${PORT}...`));
+app.post('/add-image', uploader.single('filee'), fileUpload, (req, res) => {
+    console.log('my log: ', req.body);
+    console.log('file ?: ', res.locals.fileUrl);
+    let url = res.locals.fileUrl;
+    let title = req.body.filename;
+    let username = 'user 1';
+    let description = 'some info';
+    insertIntoImageboardDB(url, username, title, description)
+        .then((data) => {
+            console.log(data.rows);
+        })
+        .catch(err =>{
+            console.log('the error: ', err);
+        });
+    if (req.file){
+        res.json({success: true, fileUrl: res.locals.fileUrl});
+    }else{
+        res.json({success: false});
+    }
+});
 
-// let url = `https://spiced.space/mint/imageboard_1/`;
-// let username = `Vlad`;
-// let title = 'TEST';
-// let description = 'some stuff';
-// console.log('got here');
-// insertIntoImageboardDB(url, username, title, description)
+app.listen(PORT, () => console.log(`I'm listening on port ${PORT}...`));

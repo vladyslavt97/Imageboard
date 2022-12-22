@@ -4,6 +4,7 @@
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <title>Image Board :)</title>
+        <link rel="icon" type="image/x-icon" href="./favicon.ico">
         <script
             defer
             src="./js/app.js"
@@ -11,16 +12,34 @@
             crossorigin="use-credentials"
         ></script>
         <link rel="stylesheet" href="styles.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap" rel="stylesheet">
     </head>
     <body>
         <div id="main">
             <!-- v-bind is used for attributes like class, src, href, alt -->
-            <h1 v-bind:class="headingClass">{{ heading }}</h1>
-            <h2>Hi, {{ greeting }}</h2>
-            <ul v-if="images.length > 0">
+            <h1 v-bind:class="headingClass" id="header">{{ heading }}</h1>
+            <!-- we will handle the upload manually in vueJS in the handleSubmit function -->
+            <form v-on:submit="handleSubmit" id="uploader-div">
+                <div>
+                    <span>Title: </span><input type="text" name="filename" v-model="filename">
+                </div>
+                <!-- <div>
+                    <span>Description: </span><input type="text" name="description" v-model="filename">
+                </div>
+                <div>
+                    <span>Username: </span><input type="text" name="username" v-model="filename">
+                </div> -->
+                <div>
+                    <span>Upload here:</span><input type="file" name="filee" accept="image/*" v-on:change="handleFileChange">
+                </div>
+                <button>Submit</button>
+            </form>
+            <ul>
                 <li v-for="i in images">
                     <img v-bind:src="i.url" v-bind:alt="images">
-                    <h2>{{i.title}}</h2>
+                    <h2 id="description">{{i.title}}</h2>
                 </li>
             </ul>            
         
