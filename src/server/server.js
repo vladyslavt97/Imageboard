@@ -12,6 +12,7 @@ const {
 
 app.use(express.static(path.join(__dirname, "..", "client")));
 app.use(express.json());
+app.use(express.urlencoded({extended: false}));
 
 app.get("/", (req, res) => {
     res.sendFile(path.join(__dirname, "../client", "index.html"));
@@ -36,15 +37,15 @@ app.post('/add-image', uploader.single('filee'), fileUpload, (req, res) => {
     insertIntoImageboardDB(url, username, title, description)
         .then((data) => {
             console.log(data.rows);
+            if (req.file){
+                res.json({success: true, myObj: data.rows[0]});
+            }else{
+                res.json({success: false});
+            }
         })
         .catch(err =>{
             console.log('the error: ', err);
         });
-    if (req.file){
-        res.json({success: true, fileUrl: res.locals.fileUrl});
-    }else{
-        res.json({success: false});
-    }
 });
 
 app.listen(PORT, () => console.log(`I'm listening on port ${PORT}...`));

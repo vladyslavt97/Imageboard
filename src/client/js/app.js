@@ -25,13 +25,13 @@ Vue.createApp({
                 method: 'POST', 
                 body: formData
             })
-            
                 .then(res => {
                     return res.json();
                 })
                 .then(data => {
-                    console.log('data from server :) ', data);
-                    this.images = data;
+                    console.log('data from server :) ', data.myObj);
+                    // this.images = data;//push the new image obj (data) to the images array 
+                    this.images.unshift(data.myObj);
                 });
         },
         handleFileChange(event){
@@ -46,8 +46,7 @@ Vue.createApp({
                 return res.json();
             })
             .then(data => {
-                console.log('data from server :) ', data);
-                console.log('images array: ', this.images);
+                console.log('images: ', data);
                 this.images = data;
             });
     }

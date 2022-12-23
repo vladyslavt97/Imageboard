@@ -10,5 +10,6 @@ module.exports.insertIntoImageboardDB = (url, username, title, description) =>{
 };
 
 module.exports.selectAllDataFromImageboardDB = () =>{
-    return db.query(`SELECT * FROM images;`);
+    return db.query(`SELECT * 
+    FROM images;`);
 };
