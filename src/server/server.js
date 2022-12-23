@@ -7,7 +7,8 @@ const { uploader, fileUpload } = require('./file-upload');
 
 const { 
     insertIntoImageboardDB, 
-    selectAllDataFromImageboardDB } = require('./db.js');
+    selectAllDataFromImageboardDB,
+    selectImageFromImageboardBaseOnID } = require('./db.js');
 
 
 app.use(express.static(path.join(__dirname, "..", "client")));
@@ -27,13 +28,30 @@ app.get("/images", (req, res) => {
         });
 });
 
+app.get("/image/:id", (req,res) => {
+    const imageId = req.params.id;
+    console.log('imageId: ', imageId);
+    selectImageFromImageboardBaseOnID(imageId)
+        .then((data) => {
+            console.log('file: ', req.file);
+            if (req.file){
+                res.json({success: true, myData: data});
+            }else{
+                res.json({success: false});
+            }
+        })
+        .catch(err=>{
+            console.log('error: ', err);
+        });
+});
+
 app.post('/add-image', uploader.single('filee'), fileUpload, (req, res) => {
-    console.log('my log: ', req.body);
-    console.log('file ?: ', res.locals.fileUrl);
+    // console.log('my log: ', req.body);
+    // console.log('file ?: ', res.locals.fileUrl);
     let url = res.locals.fileUrl;
     let title = req.body.filename;
-    let username = 'user 1';
-    let description = 'some info';
+    let username = req.body.description;
+    let description = req.body.username;
     insertIntoImageboardDB(url, username, title, description)
         .then((data) => {
             console.log(data.rows);

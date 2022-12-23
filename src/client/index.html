@@ -23,14 +23,14 @@
             <!-- we will handle the upload manually in vueJS in the handleSubmit function -->
             <form v-on:submit="handleSubmit" id="uploader-div">
                 <div>
-                    <span>Title: </span><input type="text" name="filename" v-model="filename">
-                </div>
-                <!-- <div>
-                    <span>Description: </span><input type="text" name="description" v-model="filename">
+                    <span>Title: </span><input v-model="filename">
                 </div>
                 <div>
-                    <span>Username: </span><input type="text" name="username" v-model="filename">
-                </div> -->
+                    <span>Description: </span><input v-model="description">
+                </div>
+                <div>
+                    <span>Username: </span><input v-model="username">
+                </div>
                 <div>
                     <span>Upload here:</span><input type="file" name="filee" accept="image/*" v-on:change="handleFileChange">
                 </div>
@@ -42,7 +42,11 @@
                     <h2 id="description">{{i.title}}</h2>
                 </li>
             </ul>            
-        
+            <h1>Components in Vue</h1>
+            <city-summary 
+                v-bind:citiesprops="cities" 
+                v-on:citychanged="handleCityChange"
+            ></city-summary>
         </div>
 
     </body>

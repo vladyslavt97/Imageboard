@@ -1,5 +1,6 @@
 import * as Vue from './vue.js';
 
+import {image} from 'image.js';
 Vue.createApp({
     data: () => {
         return {
@@ -8,7 +9,9 @@ Vue.createApp({
             images: [],
             greeting: 'Mint',
             file: null,
-            filename: ''
+            filename: '',
+            description: '',
+            username: ''
         };
     },
     methods: {
@@ -18,6 +21,8 @@ Vue.createApp({
 
             const formData = new FormData();
             formData.append('filename', this.filename);
+            formData.append('description', this.description);
+            formData.append('username', this.username);
             formData.append('filee', this.file);
 
             // do fetch afterwards as a POST request. With the response you update your images array.
@@ -30,7 +35,6 @@ Vue.createApp({
                 })
                 .then(data => {
                     console.log('data from server :) ', data.myObj);
-                    // this.images = data;//push the new image obj (data) to the images array 
                     this.images.unshift(data.myObj);
                 });
         },
