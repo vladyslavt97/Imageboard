@@ -1,6 +1,7 @@
 import * as Vue from './vue.js';
 
-import {image} from 'image.js';
+// import {image} from 'image.js';
+import { imageSummaryComponent } from './modal/image.js';
 Vue.createApp({
     data: () => {
         return {
@@ -11,12 +12,15 @@ Vue.createApp({
             file: null,
             filename: '',
             description: '',
-            username: ''
+            username: '',
+            imageId: null,
+            showModal: false,
+            // selectedImageId: null,
         };
     },
     methods: {
         handleSubmit(event){
-            console.log('target: ',event.target);
+            console.log('target: ', event.target);
             event.preventDefault();
 
             const formData = new FormData();
@@ -34,13 +38,20 @@ Vue.createApp({
                     return res.json();
                 })
                 .then(data => {
-                    console.log('data from server :) ', data.myObj);
-                    this.images.unshift(data.myObj);
+                    console.log('data from server :) ', data.myData);
+                    this.images.unshift(data.myData);
                 });
         },
         handleFileChange(event){
             console.log(event.target.files);
             this.file = event.target.files[0];
+        },
+        handleClickOnImage(image){
+            // console.log('event: ', evt.target.files);
+            console.log('image', image);
+            const savedUrl = image.url;
+            const savedTitle = image.title;
+            console.log(savedUrl, savedTitle);
         }
     },
     created() {
@@ -53,5 +64,9 @@ Vue.createApp({
                 console.log('images: ', data);
                 this.images = data;
             });
-    }
+    },
+    //
+    components: {
+        'image-comp': imageSummaryComponent
+    },
 }).mount('#main');

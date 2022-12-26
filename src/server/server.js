@@ -30,24 +30,17 @@ app.get("/images", (req, res) => {
 
 app.get("/image/:id", (req,res) => {
     const imageId = req.params.id;
-    console.log('imageId: ', imageId);
     selectImageFromImageboardBaseOnID(imageId)
         .then((data) => {
-            console.log('file: ', req.file);
-            if (req.file){
-                res.json({success: true, myData: data});
-            }else{
-                res.json({success: false});
-            }
+            res.json({success: true, myData: data.rows[0]});
         })
         .catch(err=>{
             console.log('error: ', err);
+            res.json({success: false});
         });
 });
 
 app.post('/add-image', uploader.single('filee'), fileUpload, (req, res) => {
-    // console.log('my log: ', req.body);
-    // console.log('file ?: ', res.locals.fileUrl);
     let url = res.locals.fileUrl;
     let title = req.body.filename;
     let username = req.body.description;

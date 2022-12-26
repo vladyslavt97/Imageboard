@@ -37,16 +37,19 @@
                 <button>Submit</button>
             </form>
             <ul>
-                <li v-for="i in images">
-                    <img v-bind:src="i.url" v-bind:alt="images">
+                <li v-for="i in images" v-on:click="() => handleClickOnImage(i)" class="image">
+                    <img v-bind:src="i.url" v-bind:alt="images" v-bind:id="i.id">
                     <h2 id="description">{{i.title}}</h2>
                 </li>
-            </ul>            
-            <h1>Components in Vue</h1>
-            <city-summary 
-                v-bind:citiesprops="cities" 
-                v-on:citychanged="handleCityChange"
-            ></city-summary>
+            </ul>
+            
+            <!-- part 3 -->
+            <h1>Image Components in Vue</h1>
+            <image-comp 
+                v-if="showModal"
+                v-bind:imageid="imageId"
+                v-on:imagechanged="handleImageChange"
+            ></image-comp>
         </div>
 
     </body>
