@@ -37,7 +37,7 @@
             </form>
             <ul>
                 <li v-for="i in images" v-on:click="() => handleClickOnImage(i)" class="image">
-                    <img v-bind:src="i.url" v-bind:alt="images" v-bind:id="i.id">
+                    <img v-bind:src="i.url" v-bind:alt="i.title" v-bind:id="i.id">
                     <h2 id="description">{{i.title}}</h2>
                 </li>
             </ul>
@@ -46,6 +46,7 @@
             <image-comp 
                 v-if="showModal"
                 v-bind:imageid="imageId"
+                v-bind:blub="saved"
                 v-on:imagechanged="handleImageChange"
                 @close="handleCloseEvent"
             ></image-comp>

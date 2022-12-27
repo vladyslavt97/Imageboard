@@ -35,7 +35,7 @@ app.get("/image/:id", (req,res) => {
             res.json({success: true, myData: data.rows[0]});
         })
         .catch(err=>{
-            console.log('error: ', err);
+            console.log('error..: ', err);
             res.json({success: false});
         });
 });
@@ -43,11 +43,11 @@ app.get("/image/:id", (req,res) => {
 app.post('/add-image', uploader.single('filee'), fileUpload, (req, res) => {
     let url = res.locals.fileUrl;
     let title = req.body.filename;
-    let username = req.body.description;
-    let description = req.body.username;
+    let description = req.body.description;
+    let username = req.body.username;
     insertIntoImageboardDB(url, username, title, description)
         .then((data) => {
-            console.log(data.rows);
+            console.log('question: ', data.rows);
             if (req.file){
                 res.json({success: true, myObj: data.rows[0]});
             }else{

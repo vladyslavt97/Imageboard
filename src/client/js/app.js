@@ -15,12 +15,11 @@ Vue.createApp({
             username: '',
             imageId: null,
             showModal: false,
-            // selectedImageId: null,
+            saved: {},
         };
     },
     methods: {
         handleSubmit(event){
-            console.log('target: ', event.target);
             event.preventDefault();
 
             const formData = new FormData();
@@ -38,35 +37,34 @@ Vue.createApp({
                     return res.json();
                 })
                 .then(data => {
-                    console.log('data from server ', data.myData);
-                    this.images.unshift(data.myData);
+                    console.log('data from server ', data.myObj);
+                    this.images.unshift(data.myObj);
+                })
+                .catch(err => {
+                    console.log('er: ', err);
                 });
         },
         handleFileChange(event){
-            console.log(event.target.files);
             this.file = event.target.files[0];
         },
         handleClickOnImage(image){
-            // console.log('event: ', evt.target.files);
-            console.log('image', image);
-            const savedUrl = image.url;
-            const savedTitle = image.title;
-            console.log(savedUrl, savedTitle);
+            this.saved = image;
             this.showModal = true;
         },
-        handleCloseEvent() { //should close the modal
+        handleCloseEvent() {
             this.showModal = false;
         }
     },
     created() {
-        console.log('Vue app was created');
         fetch('/images')
             .then(res => {
                 return res.json();
             })
             .then(data => {
-                console.log('images: ', data);
                 this.images = data;
+            })
+            .catch(err => {
+                console.log('ereeee: ', err);
             });
     },
     //
