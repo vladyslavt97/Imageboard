@@ -38,7 +38,7 @@ Vue.createApp({
                     return res.json();
                 })
                 .then(data => {
-                    console.log('data from server :) ', data.myData);
+                    console.log('data from server ', data.myData);
                     this.images.unshift(data.myData);
                 });
         },
@@ -52,6 +52,10 @@ Vue.createApp({
             const savedUrl = image.url;
             const savedTitle = image.title;
             console.log(savedUrl, savedTitle);
+            this.showModal = true;
+        },
+        handleCloseEvent() { //should close the modal
+            this.showModal = false;
         }
     },
     created() {

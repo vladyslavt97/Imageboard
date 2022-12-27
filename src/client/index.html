@@ -20,7 +20,6 @@
         <div id="main">
             <!-- v-bind is used for attributes like class, src, href, alt -->
             <h1 v-bind:class="headingClass" id="header">{{ heading }}</h1>
-            <!-- we will handle the upload manually in vueJS in the handleSubmit function -->
             <form v-on:submit="handleSubmit" id="uploader-div">
                 <div>
                     <span>Title: </span><input v-model="filename">
@@ -44,11 +43,11 @@
             </ul>
             
             <!-- part 3 -->
-            <h1>Image Components in Vue</h1>
             <image-comp 
                 v-if="showModal"
                 v-bind:imageid="imageId"
                 v-on:imagechanged="handleImageChange"
+                @close="handleCloseEvent"
             ></image-comp>
         </div>
 
