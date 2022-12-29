@@ -15,7 +15,7 @@ module.exports.selectAllDataFromImageboardDB = () =>{
     ORDER BY images.created_at DESC;`);
 };
 
-module.exports.selectImageFromImageboardBaseOnID = (imageId) =>{
+module.exports.selectImageFromImageboardBasedOnID = (imageId) =>{
     return db.query(`SELECT * 
     FROM images
     WHERE id = $1;`, [imageId]);

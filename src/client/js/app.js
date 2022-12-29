@@ -1,6 +1,6 @@
 import * as Vue from './vue.js';
-
-// import {image} from 'image.js';
+// import moment from 'moment';
+// import {image} from 'image.js';//not used
 import { imageSummaryComponent } from './modal/image.js';
 Vue.createApp({
     data: () => {
@@ -37,7 +37,6 @@ Vue.createApp({
                     return res.json();
                 })
                 .then(data => {
-                    console.log('data from server ', data.myObj);
                     this.images.unshift(data.myObj);
                 })
                 .catch(err => {
@@ -49,6 +48,17 @@ Vue.createApp({
         },
         handleClickOnImage(image){
             this.saved = image;
+            // const savedDateF = moment(savedDate).format('DD-MM-YYYY');
+            // console.log(new Date(savedDate));
+            let formattedDate = new Date(image.created_at).toLocaleString('en-US', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            this.savedDate = formattedDate;
             this.showModal = true;
         },
         handleCloseEvent() {

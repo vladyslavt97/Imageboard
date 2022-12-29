@@ -47,6 +47,7 @@
                 v-if="showModal"
                 v-bind:imageid="imageId"
                 v-bind:blub="saved"
+                v-bind:savedtime="savedDate"
                 v-on:imagechanged="handleImageChange"
                 @close="handleCloseEvent"
             ></image-comp>

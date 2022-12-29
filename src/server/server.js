@@ -8,7 +8,7 @@ const { uploader, fileUpload } = require('./file-upload');
 const { 
     insertIntoImageboardDB, 
     selectAllDataFromImageboardDB,
-    selectImageFromImageboardBaseOnID } = require('./db.js');
+    selectImageFromImageboardBasedOnID } = require('./db.js');
 
 
 app.use(express.static(path.join(__dirname, "..", "client")));
@@ -30,7 +30,7 @@ app.get("/images", (req, res) => {
 
 app.get("/image/:id", (req,res) => {
     const imageId = req.params.id;
-    selectImageFromImageboardBaseOnID(imageId)
+    selectImageFromImageboardBasedOnID(imageId)
         .then((data) => {
             res.json({success: true, myData: data.rows[0]});
         })
@@ -47,7 +47,6 @@ app.post('/add-image', uploader.single('filee'), fileUpload, (req, res) => {
     let username = req.body.username;
     insertIntoImageboardDB(url, username, title, description)
         .then((data) => {
-            console.log('question: ', data.rows);
             if (req.file){
                 res.json({success: true, myObj: data.rows[0]});
             }else{
