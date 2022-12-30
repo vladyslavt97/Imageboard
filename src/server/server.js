@@ -8,7 +8,8 @@ const { uploader, fileUpload } = require('./file-upload');
 const { 
     insertIntoImageboardDB, 
     selectAllDataFromImageboardDB,
-    selectImageFromImageboardBasedOnID } = require('./db.js');
+    selectImageFromImageboardBasedOnID,
+    selectAllCommentsFromCommentsDBBasedOnId } = require('./db.js');
 
 
 app.use(express.static(path.join(__dirname, "..", "client")));
@@ -33,7 +34,13 @@ app.get("/image/:id", (req,res) => {
     selectImageFromImageboardBasedOnID(imageId)
         .then((data) => {
             res.json({success: true, myData: data.rows[0]});
+            // return selectAllCommentsFromCommentsDBBasedOnId();
         })
+        // .then((data) => {
+        //     const comments = data.rows;
+        //     res.json({success: true, theComments: data.rows});
+        //     console.log('comments: ', comments);
+        // })
         .catch(err=>{
             console.log('error..: ', err);
             res.json({success: false});
