@@ -18,6 +18,7 @@
     </head>
     <body>
         <div id="main">
+            <div id="backgroundmain"></div>
             <!-- v-bind is used for attributes like class, src, href, alt -->
             <h1 v-bind:class="headingClass" id="header">{{ heading }}</h1>
             <form v-on:submit="handleSubmit" id="uploader-div">
@@ -54,9 +55,9 @@
 
             <!-- <not-filled v-if="showError"
             ></not-filled> -->
-        </div>
-        <div id="more">
-            <button id="more">More</button> 
+            <div id="more">
+                <button id="more">More</button> 
+            </div>
         </div>
     </body>
 </html>
