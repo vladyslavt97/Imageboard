@@ -12,7 +12,8 @@ module.exports.insertIntoImageboardDB = (url, username, title, description) =>{
 module.exports.selectAllDataFromImageboardDB = () =>{
     return db.query(`SELECT * 
     FROM images 
-    ORDER BY images.created_at DESC;`);
+    ORDER BY images.created_at DESC
+    LIMIT 6;`);
 };
 
 module.exports.selectImageFromImageboardBasedOnID = (imageId) =>{

@@ -2,6 +2,7 @@ import * as Vue from './vue.js';
 // import moment from 'moment';
 // import {image} from 'image.js';//not used
 import { imageSummaryComponent } from './modal/image.js';
+import { showerror } from './showerror/showerror.js';
 Vue.createApp({
     data: () => {
         return {
@@ -13,8 +14,9 @@ Vue.createApp({
             filename: '',
             description: '',
             username: '',
-            imageId: null,
+            imageId: '',
             showModal: false,
+            // showError: false,
             saved: {},
         };
     },
@@ -36,8 +38,8 @@ Vue.createApp({
                 .then(res => {
                     return res.json();
                 })
-                .then(data => {
-                    this.images.unshift(data.myObj);
+                .then(alldata => {
+                    this.images.unshift(alldata.myObj);//myObj
                 })
                 .catch(err => {
                     console.log('er: ', err);
@@ -79,6 +81,7 @@ Vue.createApp({
     },
     //
     components: {
-        'image-comp': imageSummaryComponent
+        'image-comp': imageSummaryComponent,
+        // 'showerror': showerror
     },
 }).mount('#main');

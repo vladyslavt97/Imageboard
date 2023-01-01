@@ -5,18 +5,18 @@ export const imageSummaryComponent = {
     template: `
         <div id="backdrop" v-on:click="handleClose"></div>
         <div id="popup">
-            <img v-bind:src="this.blub.url"> 
-            <img v-bind:src="this.blub.url" id='theimage'> 
-            <h1>{{this.blub.title}}</h1>             
-            <p><em>Username:</em> {{this.blub.username}}</p>
-            <p><em>Description:</em> {{this.blub.description}}</p>
+            <img v-bind:src="this.imageobj.url"> 
+            <img v-bind:src="this.imageobj.url" id='theimage'> 
+            <h1>{{this.imageobj.title}}</h1>             
+            <p><em>Username:</em> {{this.imageobj.username}}</p>
+            <p><em>Description:</em> {{this.imageobj.description}}</p>
             <p><em>Uploading time:</em> {{savedtime}}</p>
         </div>    
     `,
     // <comments-component v:bind:comments="comments"></comments-component>
 
     // ------COMMUNCATION BETWEEN Parents and Child Components------
-    props: ['imageid', 'blub', 'savedtime'], // Properties that are passed in from parent
+    props: ['imageid', 'imageobj', 'savedtime'], // Properties that are passed in from parent
     emits: ['imagechanged', 'close'], // Events that will emit, so parent can react to it
     
     data: () => {

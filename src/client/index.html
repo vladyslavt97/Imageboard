@@ -46,12 +46,17 @@
             <image-comp 
                 v-if="showModal"
                 v-bind:imageid="imageId"
-                v-bind:blub="saved"
+                v-bind:imageobj="saved"
                 v-bind:savedtime="savedDate"
                 v-on:imagechanged="handleImageChange"
                 @close="handleCloseEvent"
             ></image-comp>
-        </div>
 
+            <!-- <not-filled v-if="showError"
+            ></not-filled> -->
+        </div>
+        <div id="more">
+            <button id="more">More</button> 
+        </div>
     </body>
 </html>

@@ -30,10 +30,14 @@ app.get("/images", (req, res) => {
 });
 
 app.get("/image/:id", (req,res) => {
+    console.log('got here');
     const imageId = req.params.id;
+    console.log('imageId: ', imageId);
+
     selectImageFromImageboardBasedOnID(imageId)
-        .then((data) => {
-            res.json({success: true, myData: data.rows[0]});
+        .then((alldata) => {
+            console.log('myData: ', alldata.rows[0]);
+            res.json({success: true, myData: alldata.rows[0]});
             // return selectAllCommentsFromCommentsDBBasedOnId();
         })
         // .then((data) => {
@@ -52,9 +56,11 @@ app.post('/add-image', uploader.single('filee'), fileUpload, (req, res) => {
     let title = req.body.filename;
     let description = req.body.description;
     let username = req.body.username;
+    // if (title !== "", description !== "", username !== ""){
     insertIntoImageboardDB(url, username, title, description)
         .then((data) => {
             if (req.file){
+                console.log('myObj: ', data.rows[0]);
                 res.json({success: true, myObj: data.rows[0]});
             }else{
                 res.json({success: false});
@@ -63,6 +69,9 @@ app.post('/add-image', uploader.single('filee'), fileUpload, (req, res) => {
         .catch(err =>{
             console.log('the error: ', err);
         });
+    // } else {
+    //     let showError = true;
+    // }
 });
 
 app.listen(PORT, () => console.log(`I'm listening on port ${PORT}...`));
