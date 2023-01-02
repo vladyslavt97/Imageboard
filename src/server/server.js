@@ -10,8 +10,7 @@ const {
     selectAllDataFromImageboardDB,
     selectImageFromImageboardBasedOnID,
     selectAllCommentsFromCommentsDBBasedOnId,
-    insertCommentToCommentsDBBasedOnId,
-    selectImageAndCommentBasedOnID } = require('./db.js');
+    insertCommentToCommentsDBBasedOnId } = require('./db.js');
 
 
 app.use(express.static(path.join(__dirname, "..", "client")));
@@ -55,21 +54,6 @@ app.get("/comment/:id", (req,res) => {
             res.json({success: false});
         });
 });
-// app.get("/image/:id", (req,res) => {
-//     console.log('got here');
-//     console.log('imageId: ', req.params);
-//     const imageId = req.params.id;
-
-//     selectImageAndCommentBasedOnID(imageId)
-//         .then((alldata) => {
-//             console.log('myData: ', alldata.rows);
-//             res.json({success: true, myData: alldata.rows[0]});
-//         })
-//         .catch(err=>{
-//             console.log('error..: ', err);
-//             res.json({success: false});
-//         });
-// });
 
 
 app.post('/add-image', uploader.single('filee'), fileUpload, (req, res) => {
@@ -81,7 +65,6 @@ app.post('/add-image', uploader.single('filee'), fileUpload, (req, res) => {
     insertIntoImageboardDB(url, username, title, description)
         .then((data) => {
             if (req.file){
-                console.log('myObj: ', data.rows[0]);
                 res.json({success: true, myObj: data.rows[0]});
             }else{
                 res.json({success: false});

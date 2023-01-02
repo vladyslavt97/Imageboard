@@ -54,9 +54,9 @@
 
             <!-- <not-filled v-if="showError"
             ></not-filled> -->
-            <div id="more">
-                <button id="more">More</button> 
-            </div>
+            <form v-on:submit="morePictures" v-if="showMore" id="more">
+                <button>More</button> 
+            </form>
         </div>
     </body>
 </html>

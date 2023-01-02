@@ -10,7 +10,7 @@ export const imageSummaryComponent = {
             <p><em>Username:</em> {{image.username}}</p>
             <p><em>Description:</em> {{image.description}}</p>
             <p><em>Uploading time:</em> {{savedtime}}</p>
-            <comments-component v:bind:comments="comments" v-bind:imageid="imageid"></comments-component>
+            <comments-component v-bind:imageid="imageid"></comments-component>
         </div>    
     `,
     // 

@@ -3,7 +3,7 @@ export const commentsComponent = {
     template: `
         <form v-on:submit="submitComment" id="comment-div">
             <div>
-                <span>Comment: </span><input v-model="comment">
+                <span>Comment: </span><input v-model="comment" id="thecommentinput">
             </div>
             <div>
                 <span>Username: </span><input v-model="usernamecomment">
@@ -22,7 +22,7 @@ export const commentsComponent = {
 
     `,
 
-    props: ['imageid', 'comments'], // Properties that are passed in from parent
+    props: ['imageid'], // Properties that are passed in from parent
     emits: [], // Events that will emit, so parent can react to it
     
     data: () => {
@@ -41,17 +41,12 @@ export const commentsComponent = {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({comment: this.comment,usernamecomment: this.usernamecomment, imageid: this.imageid}),
-                
+                body: JSON.stringify({comment: this.comment, usernamecomment: this.usernamecomment, imageid: this.imageid}),
             })
                 .then((response) => 
                     response.json())
                 .then((data) => {
-                    console.log('Success:', data.myComment);
                     this.comments.push(data.myComment);
-                    console.log('tc: ', this.comments);
-                    // When the request to add the comment is complete, an object with the data for the new comment should be added to the array of comments retrieved when the component mounted, causing the new comment to be displayed.
-                    
                 })
                 .catch((error) => {
                     console.error('Error:', error);

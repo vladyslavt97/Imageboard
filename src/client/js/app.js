@@ -17,10 +17,12 @@ Vue.createApp({
             username: '',
             imageId: null, //null also gives null
             showModal: false,
+            showMore: true,
             // showError: false,
             saved: {},
             // comment: '',
             // usernamecomment: '',
+            filteredImages: [],
         };
     },
     methods: {
@@ -42,8 +44,13 @@ Vue.createApp({
                     return res.json();
                 })
                 .then(alldata => {
-                    this.images.unshift(alldata.myObj);//myObj
-                    //.pop() if length of this.images > 6;
+                    console.log(this.images.length);
+                    if (this.images.length > 5){
+                        this.images.unshift(alldata.myObj);
+                        this.images.pop();
+                    } else {
+                        this.images.unshift(alldata.myObj);
+                    }
                 })
                 .catch(err => {
                     console.log('er: ', err);
@@ -53,7 +60,6 @@ Vue.createApp({
             this.file = event.target.files[0];
         },
         handleClickOnImage(image){
-            console.log('image', image);
             this.imageId = image.id;
             // const savedDateF = moment(savedDate).format('DD-MM-YYYY');
             // console.log(new Date(savedDate));
@@ -70,6 +76,23 @@ Vue.createApp({
         },
         handleCloseEvent() {
             this.showModal = false;
+        },
+            
+        
+        morePictures(event){
+            event.preventDefault();
+            let index = 6;
+            // this.images.slice(0, 6 += index);
+            this.filteredImages = this.images;
+            console.log('length: ', this.filteredImages.length += index);
+            // console.log('length: ', this.images.slice(0, 6 += index));
+            if (this.images.length < 6){//need to compare the current length with the length of all images in db
+                this.showMore = false;
+                console.log("hide the more button");
+            } else {
+                this.images.push();//add 6 more to the array
+            }
+            
         }
     },
     created() {
@@ -78,7 +101,7 @@ Vue.createApp({
                 return res.json();
             })
             .then(data => {
-                this.images = data;
+                this.images = data.slice(0, 6);
             })
             .catch(err => {
                 console.log('ereeee: ', err);

@@ -255,3 +255,11 @@ li{
     color: rgb(82, 82, 82);
     font-size: 10px;
 }
+
+#thecommentinput{
+    height: 50px;
+    inline-size: 150px;
+    word-break: break-all;
+    overflow-wrap: break-word;
+        
+}
