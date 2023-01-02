@@ -22,7 +22,12 @@ module.exports.selectImageFromImageboardBasedOnID = (imageId) =>{
     WHERE id = $1;`, [imageId]);
 };
 
-
+///combine two queries get image and get comment
+module.exports.selectImageAndCommentBasedOnID = (imageId) =>{
+    return db.query(`SELECT * FROM images 
+                    FULL OUTER JOIN comments 
+                    ON images.id = comments.image_id WHERE images.id = $1;`, [imageId]);
+};
 // January (Part 4 and 5)
 //only two new queries?
 
@@ -34,9 +39,9 @@ module.exports.selectAllCommentsFromCommentsDBBasedOnId = (imageId) =>{
 };
 
 // a new query for inserting a comment for a picture with specific ID (foreign key?)
-module.exports.insertCommentToCommentsDBBasedOnId = (comment, username, id) =>{
-    return db.query(`INSERT INTO comments (comment, username, id) 
-    VALUES ($1, $2, $3) RETURNING *;`, [comment, username, id]);
+module.exports.insertCommentToCommentsDBBasedOnId = (comment, usernamecomment, img_id) =>{
+    return db.query(`INSERT INTO comments (comment, username, image_id) 
+    VALUES ($1, $2, $3) RETURNING *;`, [comment, usernamecomment, img_id]);
 };
 
 

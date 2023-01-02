@@ -1,27 +1,27 @@
-// import { commentsComponent } from './comments/comments.js';
-
+import { commentsComponent } from '../comments/comments.js';
 
 export const imageSummaryComponent = {
     template: `
         <div id="backdrop" v-on:click="handleClose"></div>
         <div id="popup">
-            <img v-bind:src="this.imageobj.url"> 
-            <img v-bind:src="this.imageobj.url" id='theimage'> 
-            <h1>{{this.imageobj.title}}</h1>             
-            <p><em>Username:</em> {{this.imageobj.username}}</p>
-            <p><em>Description:</em> {{this.imageobj.description}}</p>
+            <img v-bind:src="image.url"> 
+            <img v-bind:src="image.url" id='theimage'> 
+            <h1>{{image.title}}</h1>             
+            <p><em>Username:</em> {{image.username}}</p>
+            <p><em>Description:</em> {{image.description}}</p>
             <p><em>Uploading time:</em> {{savedtime}}</p>
+            <comments-component v:bind:comments="comments"></comments-component>
         </div>    
     `,
-    // <comments-component v:bind:comments="comments"></comments-component>
+    // 
 
     // ------COMMUNCATION BETWEEN Parents and Child Components------
-    props: ['imageid', 'imageobj', 'savedtime'], // Properties that are passed in from parent
+    props: ['imageid', 'savedtime'], // Properties that are passed in from parent
     emits: ['imagechanged', 'close'], // Events that will emit, so parent can react to it
     
     data: () => {
         return {
-            images: {},
+            image: {},
         };
     },
     methods: {
@@ -39,9 +39,9 @@ export const imageSummaryComponent = {
             .then(res => {
                 return res.json();
             })
-            .then(data => this.image = data);
+            .then(data => this.image = data.myData);
     },
-    // components: {
-    //     "comments-component": commentsComponent,
-    // },
+    components: {
+        "comments-component": commentsComponent,
+    },
 };

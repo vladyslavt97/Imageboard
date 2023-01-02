@@ -9,7 +9,9 @@ const {
     insertIntoImageboardDB, 
     selectAllDataFromImageboardDB,
     selectImageFromImageboardBasedOnID,
-    selectAllCommentsFromCommentsDBBasedOnId } = require('./db.js');
+    selectAllCommentsFromCommentsDBBasedOnId,
+    insertCommentToCommentsDBBasedOnId,
+    selectImageAndCommentBasedOnID } = require('./db.js');
 
 
 app.use(express.static(path.join(__dirname, "..", "client")));
@@ -31,17 +33,19 @@ app.get("/images", (req, res) => {
 
 app.get("/image/:id", (req,res) => {
     console.log('got here');
+    console.log('imageId: ', req.params);
     const imageId = req.params.id;
-    console.log('imageId: ', imageId);
 
-    selectImageFromImageboardBasedOnID(imageId)
+    selectImageAndCommentBasedOnID(imageId)
         .then((alldata) => {
-            console.log('myData: ', alldata.rows[0]);
+            console.log('myData: ', alldata.rows);
             res.json({success: true, myData: alldata.rows[0]});
             // return selectAllCommentsFromCommentsDBBasedOnId();
+            //Can this request be a part of the existing app.get?
         })
         // .then((data) => {
         //     const comments = data.rows;
+        //     console.log('comments: ', comments);
         //     res.json({success: true, theComments: data.rows});
         //     console.log('comments: ', comments);
         // })
@@ -73,5 +77,21 @@ app.post('/add-image', uploader.single('filee'), fileUpload, (req, res) => {
     //     let showError = true;
     // }
 });
+
+// In addition to the GET request it makes when it mounts, the comments component will have to make a POST request to submit a new comment.
+//post for inserting a comment
+app.post('/add-comment', (req, res) => {
+    //where do we get the const img_id from? should be know from the other quert to link together
+    const img_id = req.body.id; //does not exist! Just an example
+    const { comment, usernamecomment } = req.body;
+    insertCommentToCommentsDBBasedOnId(comment, usernamecomment, img_id)
+        .then((data) => {
+            console.log('data: ', data);
+        })
+        .catch(err => {
+            console.log('err: ', err);
+        });
+});
+// On the server, you will have to make sure that you are passing the value returned by express.json() to app.use so that the body of the POST request will be parsed and req.body will be available in your route.
 
 app.listen(PORT, () => console.log(`I'm listening on port ${PORT}...`));

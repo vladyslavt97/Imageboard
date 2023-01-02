@@ -219,3 +219,14 @@ em{
     justify-content: center;
     bottom: 10px;
 }
+
+#onecomment{
+    background-color: light grey;
+    opacity: 0.5;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+#submitcomment{
+    padding: 5px;
+}
