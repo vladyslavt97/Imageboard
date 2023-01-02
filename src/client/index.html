@@ -36,7 +36,7 @@
                 </div>
                 <button>Submit</button>
             </form>
-            <ul>
+            <ul id="imagesul">
                 <li v-for="i in images" v-on:click="() => handleClickOnImage(i)" class="image">
                     <img v-bind:src="i.url" v-bind:alt="i.title" v-bind:id="i.id">
                     <h2 id="description">{{i.title}}</h2>

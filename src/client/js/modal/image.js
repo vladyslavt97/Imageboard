@@ -10,7 +10,7 @@ export const imageSummaryComponent = {
             <p><em>Username:</em> {{image.username}}</p>
             <p><em>Description:</em> {{image.description}}</p>
             <p><em>Uploading time:</em> {{savedtime}}</p>
-            <comments-component v:bind:comments="comments"></comments-component>
+            <comments-component v:bind:comments="comments" v-bind:imageid="imageid"></comments-component>
         </div>    
     `,
     // 
@@ -30,7 +30,7 @@ export const imageSummaryComponent = {
         },
         handleClose() { //should close the modal
             this.$emit('close');
-        }
+        },
     },
     mounted(){
         fetch(`/image/${this.imageid}`, {
@@ -39,7 +39,8 @@ export const imageSummaryComponent = {
             .then(res => {
                 return res.json();
             })
-            .then(data => this.image = data.myData);
+            .then(data => 
+                this.image = data.myData);
     },
     components: {
         "comments-component": commentsComponent,

@@ -32,28 +32,45 @@ app.get("/images", (req, res) => {
 });
 
 app.get("/image/:id", (req,res) => {
-    console.log('got here');
-    console.log('imageId: ', req.params);
     const imageId = req.params.id;
-
-    selectImageAndCommentBasedOnID(imageId)
+    selectImageFromImageboardBasedOnID(imageId)
         .then((alldata) => {
-            console.log('myData: ', alldata.rows);
             res.json({success: true, myData: alldata.rows[0]});
-            // return selectAllCommentsFromCommentsDBBasedOnId();
-            //Can this request be a part of the existing app.get?
         })
-        // .then((data) => {
-        //     const comments = data.rows;
-        //     console.log('comments: ', comments);
-        //     res.json({success: true, theComments: data.rows});
-        //     console.log('comments: ', comments);
-        // })
         .catch(err=>{
             console.log('error..: ', err);
             res.json({success: false});
         });
 });
+
+app.get("/comment/:id", (req,res) => {
+    const commentId = req.params.id;
+    selectAllCommentsFromCommentsDBBasedOnId(commentId)
+        .then((data) => {
+            const comments = data.rows;
+            res.json({success: true, theComments: comments});
+        })
+        .catch(err=>{
+            console.log('error of comments get..: ', err);
+            res.json({success: false});
+        });
+});
+// app.get("/image/:id", (req,res) => {
+//     console.log('got here');
+//     console.log('imageId: ', req.params);
+//     const imageId = req.params.id;
+
+//     selectImageAndCommentBasedOnID(imageId)
+//         .then((alldata) => {
+//             console.log('myData: ', alldata.rows);
+//             res.json({success: true, myData: alldata.rows[0]});
+//         })
+//         .catch(err=>{
+//             console.log('error..: ', err);
+//             res.json({success: false});
+//         });
+// });
+
 
 app.post('/add-image', uploader.single('filee'), fileUpload, (req, res) => {
     let url = res.locals.fileUrl;
@@ -78,18 +95,17 @@ app.post('/add-image', uploader.single('filee'), fileUpload, (req, res) => {
     // }
 });
 
-// In addition to the GET request it makes when it mounts, the comments component will have to make a POST request to submit a new comment.
+
 //post for inserting a comment
-app.post('/add-comment', (req, res) => {
-    //where do we get the const img_id from? should be know from the other quert to link together
-    const img_id = req.body.id; //does not exist! Just an example
-    const { comment, usernamecomment } = req.body;
-    insertCommentToCommentsDBBasedOnId(comment, usernamecomment, img_id)
+app.post('/comment', (req, res) => {
+    const { comment, usernamecomment, imageid } = req.body;
+    insertCommentToCommentsDBBasedOnId(comment, usernamecomment, imageid)
         .then((data) => {
-            console.log('data: ', data);
+            res.json({ success: true, myComment: data.rows[0]});
         })
         .catch(err => {
-            console.log('err: ', err);
+            console.log('err in POST insert comment: ', err);
+            res.json({success: false});
         });
 });
 // On the server, you will have to make sure that you are passing the value returned by express.json() to app.use so that the body of the POST request will be parsed and req.body will be available in your route.

@@ -9,7 +9,7 @@ Vue.createApp({
             heading: 'Image-board by V.T.',
             headingClass: 'h1-header',
             images: [],
-            comments: [],
+            // comments: [],
             greeting: 'Mint',
             file: null,
             filename: '',
@@ -19,6 +19,8 @@ Vue.createApp({
             showModal: false,
             // showError: false,
             saved: {},
+            // comment: '',
+            // usernamecomment: '',
         };
     },
     methods: {
@@ -46,23 +48,6 @@ Vue.createApp({
                 .catch(err => {
                     console.log('er: ', err);
                 });
-            
-            // Note that this POST request will not involve a FormData object.  
-            // fetch('https://example.com/profile', {
-            //     method: 'POST', 
-            //     headers: {
-            //         'Content-Type': 'application/json',//Note also that you will have to set the Content-Type header for the request appropriately.
-            //     },
-            //     body: JSON.stringify(mydata),//Instead, a stringified JSON object with the desired properties should be passed as the body property of the second argument to fetch.
-            // })
-            //     .then((response) => response.json())
-            //     .then((data) => {
-            //         // When the request to add the comment is complete, an object with the data for the new comment should be added to the array of comments retrieved when the component mounted, causing the new comment to be displayed.
-            //         console.log('Success:', data);
-            //     })
-            //     .catch((error) => {
-            //         console.error('Error:', error);
-            //     });
         },
         handleFileChange(event){
             this.file = event.target.files[0];
