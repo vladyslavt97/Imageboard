@@ -258,8 +258,13 @@ li{
 
 #thecommentinput{
     height: 50px;
-    inline-size: 150px;
-    word-break: break-all;
-    overflow-wrap: break-word;
-        
+    max-width: 150px;
+}
+
+#deleteimg{
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: red;
+    margin: 10px;
 }

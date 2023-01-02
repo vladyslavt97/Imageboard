@@ -4,6 +4,9 @@ export const imageSummaryComponent = {
     template: `
         <div id="backdrop" v-on:click="handleClose"></div>
         <div id="popup">
+            <form v-on:submit="deleteImg">
+                <button id="deleteimg">DELETE</button> 
+            </form>
             <img v-bind:src="image.url"> 
             <img v-bind:src="image.url" id='theimage'> 
             <h1>{{image.title}}</h1>             
@@ -31,6 +34,26 @@ export const imageSummaryComponent = {
         handleClose() { //should close the modal
             this.$emit('close');
         },
+        deleteImg(event){
+            event.preventDefault();
+            
+            fetch('/delete/', {
+                method: 'POST', 
+                // headers: {
+                //     'Content-Type': 'application/json',
+                // },
+                // body: JSON.stringify({comment: this.comment, usernamecomment: this.usernamecomment, imageid: this.imageid}),
+            })
+            // .then((response) => 
+            //     // response.json())
+                .then(() => {
+                    // this.comments.push(data.myComment);
+                    this.$emit('close');
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        }
     },
     mounted(){
         fetch(`/image/${this.imageid}`, {

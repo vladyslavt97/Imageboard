@@ -3,7 +3,7 @@ export const commentsComponent = {
     template: `
         <form v-on:submit="submitComment" id="comment-div">
             <div>
-                <span>Comment: </span><input v-model="comment" id="thecommentinput">
+                <span>Comment: </span><textarea v-model="comment" id="thecommentinput"/>
             </div>
             <div>
                 <span>Username: </span><input v-model="usernamecomment">
@@ -13,7 +13,7 @@ export const commentsComponent = {
 
         <div id="results">
             <ul class="thecommentul">
-                <li v-for="comment in comments" id="onecomment" id="onecommentli">
+                <li v-for="comment in comments" >
                     <h2 id="one-comment">Comment: <br><em>{{comment.comment}}</em></h2>
                     <h2 id="one-comment-data"> User "{{comment.username}}" commented on {{comment.created_at}}</h2>
                 </li>

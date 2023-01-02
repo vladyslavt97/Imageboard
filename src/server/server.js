@@ -10,7 +10,9 @@ const {
     selectAllDataFromImageboardDB,
     selectImageFromImageboardBasedOnID,
     selectAllCommentsFromCommentsDBBasedOnId,
-    insertCommentToCommentsDBBasedOnId } = require('./db.js');
+    insertCommentToCommentsDBBasedOnId,
+    deleteCommentsForImageIdFromDB,
+    deleteImageFromImagesDB } = require('./db.js');
 
 
 app.use(express.static(path.join(__dirname, "..", "client")));
@@ -91,6 +93,21 @@ app.post('/comment', (req, res) => {
             res.json({success: false});
         });
 });
-// On the server, you will have to make sure that you are passing the value returned by express.json() to app.use so that the body of the POST request will be parsed and req.body will be available in your route.
+
+//
+app.post('/delete', (req, res) => {
+    const {imageid} = req.body;
+    deleteImageFromImagesDB(imageid)
+        .then(() => {
+            console.log('deleted from images');
+            return deleteCommentsForImageIdFromDB(imageid);
+        })
+        .then(() => {
+            console.log('deleted from comments', );
+        })
+        .catch(err => {
+            console.log('err in delete queries: ', err);
+        });
+});
 
 app.listen(PORT, () => console.log(`I'm listening on port ${PORT}...`));

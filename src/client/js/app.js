@@ -81,10 +81,10 @@ Vue.createApp({
         
         morePictures(event){
             event.preventDefault();
-            let index = 6;
+            // let index = 6;
             // this.images.slice(0, 6 += index);
-            this.filteredImages = this.images;
-            console.log('length: ', this.filteredImages.length += index);
+            // this.filteredImages = this.images;
+            // console.log('length: ', this.images.length += index);
             // console.log('length: ', this.images.slice(0, 6 += index));
             if (this.images.length < 6){//need to compare the current length with the length of all images in db
                 this.showMore = false;
