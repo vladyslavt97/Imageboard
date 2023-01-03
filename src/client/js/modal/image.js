@@ -20,7 +20,7 @@ export const imageSummaryComponent = {
 
     // ------COMMUNCATION BETWEEN Parents and Child Components------
     props: ['imageid', 'savedtime'], // Properties that are passed in from parent
-    emits: ['imagechanged', 'close'], // Events that will emit, so parent can react to it
+    emits: ['close'], // removed the imagechanged
     
     data: () => {
         return {
@@ -28,30 +28,27 @@ export const imageSummaryComponent = {
         };
     },
     methods: {
-        handleImageChange: function (evt, index) {
-            this.$emit('imagechanged', evt.target.value, index); // this.$emit from Vue that you can use to emit/send out events //evt.target.value, index
-        },
+        // handleImageChange: function (evt, index) {
+        //     this.$emit('imagechanged', evt.target.value, index); // this.$emit from Vue that you can use to emit/send out events //evt.target.value, index
+        // },
         handleClose() { //should close the modal
             this.$emit('close');
         },
         deleteImg(event){
             event.preventDefault();
-            
-            fetch('/delete/', {
-                method: 'POST', 
-                // headers: {
-                //     'Content-Type': 'application/json',
-                // },
-                // body: JSON.stringify({comment: this.comment, usernamecomment: this.usernamecomment, imageid: this.imageid}),
+            this.$emit('close');
+
+            fetch('/image', {
+                method: 'DELETE', 
             })
-            // .then((response) => 
-            //     // response.json())
-                .then(() => {
-                    // this.comments.push(data.myComment);
+                .then(response => 
+                    response.json())
+                .then((data) => {
                     this.$emit('close');
+                    console.log('deleted', data);
                 })
                 .catch((error) => {
-                    console.error('Error:', error);
+                    console.error('Error in fetch delete:', error);
                 });
         }
     },

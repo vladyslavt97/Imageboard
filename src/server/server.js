@@ -95,8 +95,9 @@ app.post('/comment', (req, res) => {
 });
 
 //
-app.post('/delete', (req, res) => {
+app.delete('/image', (req, res) => {
     const {imageid} = req.body;
+    console.log('imageid: ', imageid);  
     deleteImageFromImagesDB(imageid)
         .then(() => {
             console.log('deleted from images');

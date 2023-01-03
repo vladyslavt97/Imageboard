@@ -37,7 +37,7 @@
                 <button>Submit</button>
             </form>
             <ul id="imagesul">
-                <li v-for="i in images" v-on:click="() => handleClickOnImage(i)" class="image">
+                <li v-for="i in images.slice(0,6 + index)" v-on:click="() => handleClickOnImage(i)" class="image">
                     <img v-bind:src="i.url" v-bind:alt="i.title" v-bind:id="i.id">
                     <h2 id="description">{{i.title}}</h2>
                 </li>
@@ -48,9 +48,9 @@
                 v-if="showModal"
                 v-bind:imageid="imageId"
                 v-bind:savedtime="savedDate"
-                v-on:imagechanged="handleImageChange"
                 @close="handleCloseEvent"
             ></image-comp>
+            <!-- v-on:imagechanged="handleImageChange" -->
 
             <!-- <not-filled v-if="showError"
             ></not-filled> -->

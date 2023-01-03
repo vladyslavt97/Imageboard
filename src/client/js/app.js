@@ -23,6 +23,7 @@ Vue.createApp({
             // comment: '',
             // usernamecomment: '',
             filteredImages: [],
+            index: 0,
         };
     },
     methods: {
@@ -82,7 +83,8 @@ Vue.createApp({
         morePictures(event){
             event.preventDefault();
             // let index = 6;
-            // this.images.slice(0, 6 += index);
+            // this.filteredImages = this.images.slice(0, this.index + 6);
+            this.index += 6;
             // this.filteredImages = this.images;
             // console.log('length: ', this.images.length += index);
             // console.log('length: ', this.images.slice(0, 6 += index));
@@ -101,7 +103,7 @@ Vue.createApp({
                 return res.json();
             })
             .then(data => {
-                this.images = data.slice(0, 6);
+                this.images = data;
             })
             .catch(err => {
                 console.log('ereeee: ', err);
