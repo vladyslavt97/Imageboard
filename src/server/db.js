@@ -50,19 +50,19 @@ module.exports.deleteCommentsForImageIdFromDB = (imageid) => {
 };
 
 //delete from response
-module.exports.deleteResponseBasedOnId = (imageid) => {
+module.exports.deleteResponseBasedOnId = (commentid) => {
     return db.query(`
         DELETE FROM response 
-        WHERE image_id = $1;`, [imageid]);
+        WHERE comment_id = $1;`, [commentid]);
 };
 
 
 //2 queries for response
 //select
-module.exports.selectAllFromResponseBasedOnID = (replyId) =>{
+module.exports.selectAllFromResponseBasedOnID = (commentid) =>{
     return db.query(`SELECT * 
     FROM response
-    WHERE id = $1;`, [replyId]);
+    WHERE comment_id = $1;`, [commentid]);
 };
 
 module.exports.insertResponseBasedOnId = (reply, usernamereply, commentid) =>{

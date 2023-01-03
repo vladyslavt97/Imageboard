@@ -17,7 +17,6 @@ export const replyComponent = {
                         <h2 id="one-reply">Reply: <br><em>{{r.reply}}</em></h2>
                         <h2 id="one-reply-data"> User "{{r.username}}" commented on {{r.created_at}}</h2>
                     </li>
-                    <reply-component v-bind:commentid="commentid"></reply-component>
                 </ul>
             </div>
         </div>
@@ -32,7 +31,6 @@ export const replyComponent = {
             replies: [],
             reply: '',
             usernamereply: '',
-            commentid: null,
         };
     },
     methods: {
@@ -54,17 +52,34 @@ export const replyComponent = {
                 .catch((error) => {
                     console.error('Error:', error);
                 });
+
+            fetch(`/image/${this.commentid}`, {
+                method: 'DELETE', 
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({commentid: this.commentid}),
+            })
+                .then((response) => 
+                    response.json())
+                .then((data) => {
+                    console.log('some info: ', data);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
         }
         
     },
     mounted(){
-        fetch(`/reply/${this.imageid}`, {
+        fetch(`/reply/${this.commentid}`, {
             method: 'GET', 
         })
             .then(res => {
                 return res.json();
             })
             .then(data => {
+                console.log('replies', data);
                 this.replies = data.theReplies;
             })
             .catch(err => {

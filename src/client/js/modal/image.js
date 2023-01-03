@@ -7,7 +7,7 @@ export const imageSummaryComponent = {
             <form v-on:submit="deleteImg">
                 <button id="deleteimg">DELETE</button> 
             </form>
-            <img v-bind:src="image.url"> 
+            <img v-bind:src="image.url" id="smallimage"> 
             <img v-bind:src="image.url" id='theimage'> 
             <h1>{{image.title}}</h1>             
             <p><em>Username:</em> {{image.username}}</p>

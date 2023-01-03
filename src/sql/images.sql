@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS comments;
+DROP TABLE IF EXISTS response;
 DROP TABLE IF EXISTS images;
 
 CREATE TABLE images(
@@ -21,7 +23,7 @@ CREATE TABLE response(
     id SERIAL PRIMARY KEY,
     reply TEXT NOT NULL,
     username VARCHAR NOT NULL,
-    comment_id INTEGER NOT NULL REFERENCES images(id),
+    comment_id INTEGER NOT NULL REFERENCES comments(id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

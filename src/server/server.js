@@ -11,6 +11,7 @@ const {
     selectImageFromImageboardBasedOnID,
     selectAllCommentsFromCommentsDBBasedOnId,
     insertCommentToCommentsDBBasedOnId,
+    deleteResponseBasedOnId,
     deleteCommentsForImageIdFromDB,
     deleteImageFromImagesDB,
     insertResponseBasedOnId,
@@ -61,10 +62,12 @@ app.get("/comment/:id", (req,res) => {
 
 //reply get (to see all replies)
 app.get("/reply/:id", (req,res) => {
-    const replyId = req.params.id;
-    selectAllFromResponseBasedOnID(replyId)
+    const commentid = req.params.id;
+    // console.log('commentid in get: ', commentid);
+    selectAllFromResponseBasedOnID(commentid)
         .then((data) => {
             const replies = data.rows;
+            // console.log('replies: ',replies);
             res.json({success: true, theReplies: replies});
         })
         .catch(err=>{
@@ -83,7 +86,7 @@ app.post('/add-image', uploader.single('filee'), fileUpload, (req, res) => {
     insertIntoImageboardDB(url, username, title, description)
         .then((data) => {
             if (req.file){
-                res.json({success: true, myObj: data.rows[0]});
+                res.json({success: true, myObj: data.rows});
             }else{
                 res.json({success: false});
             }
@@ -112,7 +115,7 @@ app.post('/comment', (req, res) => {
 //
 //post for inserting a comment
 app.post('/reply', (req, res) => {
-    console.log('re.b:', req.body);
+    // console.log('re.b:', req.body);
     const { reply, usernamereply, commentid } = req.body;
     insertResponseBasedOnId(reply, usernamereply, commentid)
         .then((data) => {
@@ -124,18 +127,23 @@ app.post('/reply', (req, res) => {
         });
 });
 
-//
+//deleteResponseBasedOnId
 app.delete('/image/:id', (req, res) => {
     const imageid = req.params.id;
-    // console.log('imageid: ', imageid);  
-    deleteCommentsForImageIdFromDB(imageid)
+    const { commentid } = req.body;
+    console.log('commentid for deletion: ', req.body);  
+    deleteResponseBasedOnId(commentid)
         .then(() => {
-            // console.log('deleted from images');
+            console.log('deleted from response');
+            return deleteCommentsForImageIdFromDB(imageid);
+        })
+        .then(() => {
+            console.log('deleted from comments');
             return deleteImageFromImagesDB(imageid);
         })
         .then((data) => {
             res.json(data);
-            // console.log('deleted from comments');
+            console.log('deleted from images');
         })
         .catch(err => {
             console.log('err in delete queries: ', err);

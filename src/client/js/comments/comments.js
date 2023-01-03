@@ -18,7 +18,7 @@ export const commentsComponent = {
                 <li v-for="comment in comments" >
                     <h2 id="one-comment">Comment: <br><em>{{comment.comment}}</em></h2>
                     <h2 id="one-comment-data"> User "{{comment.username}}" commented on {{comment.created_at}}</h2>
-                    <reply-component v-bind:imageid="imageid"></reply-component>
+                    <reply-component v-bind:commentid="comment.id"></reply-component>
                 </li>
             </ul>
         </div>
@@ -50,6 +50,7 @@ export const commentsComponent = {
                     response.json())
                 .then((data) => {
                     this.comments.push(data.myComment);
+                    console.log('sdsd',this.commentid);
                 })
                 .catch((error) => {
                     console.error('Error:', error);

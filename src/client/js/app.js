@@ -23,6 +23,7 @@ Vue.createApp({
             filteredImages: [],
             index: 0,
             // currentImageId: null
+            savedDate: null,
         };
     },
     methods: {
