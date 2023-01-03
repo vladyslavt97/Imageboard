@@ -59,13 +59,13 @@ module.exports.deleteResponseBasedOnId = (imageid) => {
 
 //2 queries for response
 //select
-module.exports.selectAllFromResponseBasedOnID = (imageId) =>{
+module.exports.selectAllFromResponseBasedOnID = (replyId) =>{
     return db.query(`SELECT * 
     FROM response
-    WHERE id = $1;`, [imageId]);
+    WHERE id = $1;`, [replyId]);
 };
 
-module.exports.insertResponseBasedOnId = (reply, usernamereply, imageid) =>{
+module.exports.insertResponseBasedOnId = (reply, usernamereply, commentid) =>{
     return db.query(`INSERT INTO response (reply, username, comment_id)
-    VALUES ($1, $2, $3) RETURNING *;`, [reply, usernamereply, imageid]);
+    VALUES ($1, $2, $3) RETURNING *;`, [reply, usernamereply, commentid]);
 };

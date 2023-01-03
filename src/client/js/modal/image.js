@@ -55,9 +55,7 @@ export const imageSummaryComponent = {
         }
     },
     mounted(){
-        this.currentImageId = window.location.hash.slice(1);
-        console.log('currentImageId: ', this.currentImageId); 
-        fetch(`/image/${this.currentImageId}`, {
+        fetch(`/image/${this.imageid}`, {
             method: 'GET', 
         })
             .then(res => {

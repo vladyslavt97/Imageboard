@@ -1,3 +1,5 @@
+import { replyComponent } from '../reply/reply.js';
+
 
 export const commentsComponent = {
     template: `
@@ -16,6 +18,7 @@ export const commentsComponent = {
                 <li v-for="comment in comments" >
                     <h2 id="one-comment">Comment: <br><em>{{comment.comment}}</em></h2>
                     <h2 id="one-comment-data"> User "{{comment.username}}" commented on {{comment.created_at}}</h2>
+                    <reply-component v-bind:imageid="imageid"></reply-component>
                 </li>
             </ul>
         </div>
@@ -67,5 +70,8 @@ export const commentsComponent = {
             .catch(err => {
                 console.log('error with comment fetch: ', err);
             });
+    },
+    components: {
+        "reply-component": replyComponent,
     },
 };

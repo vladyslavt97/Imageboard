@@ -10,7 +10,6 @@ Vue.createApp({
             heading: 'Image-board by V.T.',
             headingClass: 'h1-header',
             images: [],
-            // comments: [],
             greeting: 'Mint',
             file: null,
             filename: '',
@@ -21,11 +20,9 @@ Vue.createApp({
             showMore: true,
             // showError: false,
             saved: {},
-            // comment: '',
-            // usernamecomment: '',
             filteredImages: [],
             index: 0,
-            currentImageId: null
+            // currentImageId: null
         };
     },
     methods: {
@@ -81,9 +78,9 @@ Vue.createApp({
         },
 
         handleCloseEvent() {
-            history.pushState({}, '', `/`);
-            // this.currentUserID = this.imageId;
+            this.currentImageId = null;
             this.showModal = false;
+            history.pushState({}, '', `/`);
         },
         handleImageDeletion(){
             this.value = this.images.findIndex(image => image.id === this.imageId);
@@ -103,17 +100,23 @@ Vue.createApp({
         }
     },
     mounted(){
-        this.currentImageId = window.location.hash.slice(1);
-        window.addEventListener('popstate', (e) => {
-            console.log('popstate event: ', location.href, e.state);//.hash, e.state
-            if (!this.currentImageId && window.location.hash) {
-                console.log('not seen');
-                this.currentImageId = window.location.hash.split("#")[1];
+        // this.currentImageId = window.location.hash.slice(1);
+        if (!this.imageId && window.location.hash) {
+            this.imageId = window.location.hash.split("#")[1];
+            this.showModal = true;
+
+        }
+
+        this.imageId = window.location.hash.slice(1);
+        addEventListener('popstate', (e) => {
+            console.log('popstate event: ', location.href, e.state, this.imageId, window.location.hash);//.hash, e.state
+            if (!this.showModal && window.location.hash) {
+                this.imageId = window.location.hash.split("#")[1];
                 this.showModal = true;
 
             }
-            if (this.currentImageId && !window.location.hash) {
-                this.currentImageId = null;
+            if (this.showModal && !window.location.hash) {
+                this.imageId = null;
                 this.showModal = false;
             }
         });

@@ -60,15 +60,15 @@ app.get("/comment/:id", (req,res) => {
 });
 
 //reply get (to see all replies)
-app.get("/comment/:id", (req,res) => {
+app.get("/reply/:id", (req,res) => {
     const replyId = req.params.id;
     selectAllFromResponseBasedOnID(replyId)
         .then((data) => {
-            const comments = data.rows;
-            res.json({success: true, theComments: comments});
+            const replies = data.rows;
+            res.json({success: true, theReplies: replies});
         })
         .catch(err=>{
-            console.log('error of comments get..: ', err);
+            console.log('error of replies GET..: ', err);
             res.json({success: false});
         });
 });
@@ -112,13 +112,14 @@ app.post('/comment', (req, res) => {
 //
 //post for inserting a comment
 app.post('/reply', (req, res) => {
-    const { reply, usernamereply, imageid } = req.body;
-    insertResponseBasedOnId(reply, usernamereply, imageid)
+    console.log('re.b:', req.body);
+    const { reply, usernamereply, commentid } = req.body;
+    insertResponseBasedOnId(reply, usernamereply, commentid)
         .then((data) => {
             res.json({ success: true, myReply: data.rows[0]});
         })
         .catch(err => {
-            console.log('err in POST insert comment: ', err);
+            console.log('err in POST insert reply: ', err);
             res.json({success: false});
         });
 });

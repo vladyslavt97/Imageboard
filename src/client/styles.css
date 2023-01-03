@@ -242,7 +242,7 @@ li{
 
 .thecommentul{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: center;
 }
 
@@ -267,4 +267,20 @@ li{
     right: 0;
     background-color: red;
     margin: 10px;
+}
+
+#reply-div{
+    background-color: #036200;
+    border-radius: 15px;
+    padding: 10px;
+    zoom: 0.7;
+}
+
+.thereplyul{
+    background-color: #71ff6c;
+}
+
+#replyandreplies{
+    display: flex;
+    flex-direction: row;
 }
