@@ -127,11 +127,13 @@ app.post('/reply', (req, res) => {
         });
 });
 
+
+//                  DELETE                  //
 //deleteResponseBasedOnId
 app.delete('/image/:id', (req, res) => {
     const imageid = req.params.id;
     const { commentid } = req.body;
-    console.log('commentid for deletion: ', req.body);  
+    console.log('req.params for deletion: ', req.params);  
     deleteResponseBasedOnId(commentid)
         .then(() => {
             console.log('deleted from response');

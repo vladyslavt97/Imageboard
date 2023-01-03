@@ -26,7 +26,7 @@ export const commentsComponent = {
     `,
 
     props: ['imageid'], // Properties that are passed in from parent
-    emits: [], // Events that will emit, so parent can react to it
+    emits: ['commentid'], // Events that will emit, so parent can react to it
     
     data: () => {
         return {

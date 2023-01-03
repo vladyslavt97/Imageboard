@@ -47,27 +47,28 @@ export const replyComponent = {
                 .then((response) => 
                     response.json())
                 .then((data) => {
+                    console.log('this.commentid reply', this.commentid);
                     this.replies.push(data.myReply);
                 })
                 .catch((error) => {
                     console.error('Error:', error);
                 });
-
-            fetch(`/image/${this.commentid}`, {
-                method: 'DELETE', 
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({commentid: this.commentid}),
-            })
-                .then((response) => 
-                    response.json())
-                .then((data) => {
-                    console.log('some info: ', data);
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                });
+            console.log('this.commentid reply', this.commentid);
+            // fetch(`/image/${this.commentid}`, {
+            //     method: 'DELETE', 
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //     },
+            //     body: JSON.stringify({commentid: this.commentid}),
+            // })
+            //     .then((response) => 
+            //         response.json())
+            //     .then((data) => {
+            //         console.log('some info: ', data);
+            //     })
+            //     .catch((error) => {
+            //         console.error('Error:', error);
+            //     });
         }
         
     },

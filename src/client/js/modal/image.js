@@ -39,7 +39,7 @@ export const imageSummaryComponent = {
         deleteImg(event){
             event.preventDefault();
             this.$emit('close');
-
+            console.log('commentid !!!', this.commentid);
             fetch(`/image/${this.imageid}`, {
                 method: 'DELETE', 
             })
