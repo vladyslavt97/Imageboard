@@ -162,6 +162,7 @@ button:after {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    animation: color-change 1s infinite;
 }
 
 ::-webkit-scrollbar {
@@ -311,6 +312,7 @@ li{
 #replyandreplies{
     display: flex;
     flex-direction: row;
+    gap: 10px;
 }
 
 #submitreply{

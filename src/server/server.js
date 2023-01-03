@@ -115,9 +115,9 @@ app.post('/comment', (req, res) => {
 //
 //post for inserting a comment
 app.post('/reply', (req, res) => {
-    // console.log('re.b:', req.body);
-    const { reply, usernamereply, commentid } = req.body;
-    insertResponseBasedOnId(reply, usernamereply, commentid)
+    console.log('re.b:', req.body);
+    const { reply, usernamereply, commentid, imageid } = req.body;
+    insertResponseBasedOnId(reply, usernamereply, commentid, imageid)
         .then((data) => {
             res.json({ success: true, myReply: data.rows[0]});
         })
@@ -132,9 +132,9 @@ app.post('/reply', (req, res) => {
 //deleteResponseBasedOnId
 app.delete('/image/:id', (req, res) => {
     const imageid = req.params.id;
-    const { commentid } = req.body;
-    console.log('req.params for deletion: ', req.params);  
-    deleteResponseBasedOnId(commentid)
+    // const { commentid } = req.body;
+    console.log('req.params for deletion: ', imageid);  
+    deleteResponseBasedOnId(imageid)
         .then(() => {
             console.log('deleted from response');
             return deleteCommentsForImageIdFromDB(imageid);

@@ -24,6 +24,7 @@ CREATE TABLE response(
     reply TEXT NOT NULL,
     username VARCHAR NOT NULL,
     comment_id INTEGER NOT NULL REFERENCES comments(id),
+    image_id INTEGER NOT NULL REFERENCES images(id),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 

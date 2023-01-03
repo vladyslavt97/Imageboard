@@ -23,7 +23,7 @@ export const replyComponent = {
 
     `,
 
-    props: ['commentid'], // Properties that are passed in from parent
+    props: ['commentid', 'imageid'], // Properties that are passed in from parent
     emits: [], // Events that will emit, so parent can react to it
     
     data: () => {
@@ -36,39 +36,23 @@ export const replyComponent = {
     methods: {
         submitReply(event){
             event.preventDefault();
-            
+            console.log('this.imageid:', this.imageid);
             fetch('/reply/', {
                 method: 'POST', 
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({reply: this.reply, usernamereply: this.usernamereply, commentid: this.commentid}),
+                body: JSON.stringify({reply: this.reply, usernamereply: this.usernamereply, commentid: this.commentid, imageid: this.imageid}),
             })
                 .then((response) => 
                     response.json())
                 .then((data) => {
-                    console.log('this.commentid reply', this.commentid);
+                    console.log('this.commentid reply',this.imageid);
                     this.replies.push(data.myReply);
                 })
                 .catch((error) => {
                     console.error('Error:', error);
                 });
-            console.log('this.commentid reply', this.commentid);
-            // fetch(`/image/${this.commentid}`, {
-            //     method: 'DELETE', 
-            //     headers: {
-            //         'Content-Type': 'application/json',
-            //     },
-            //     body: JSON.stringify({commentid: this.commentid}),
-            // })
-            //     .then((response) => 
-            //         response.json())
-            //     .then((data) => {
-            //         console.log('some info: ', data);
-            //     })
-            //     .catch((error) => {
-            //         console.error('Error:', error);
-            //     });
         }
         
     },
