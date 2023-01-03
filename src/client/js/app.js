@@ -86,13 +86,8 @@ Vue.createApp({
             this.showModal = false;
         },
         handleImageDeletion(){
-            console.log('imageid', this.imageId);
-            console.log('images', this.images);
             this.value = this.images.findIndex(image => image.id === this.imageId);
-            console.log('index: ', this.value);
-            // this.images = this.images.filter(item => item !== this.value);
             this.images.splice(this.value, 1);    
-            console.log('ti: ', this.images);
         },
             
         morePictures(event){
@@ -109,7 +104,6 @@ Vue.createApp({
     },
     mounted(){
         this.currentImageId = window.location.hash.slice(1);
-        console.log('currentImageId: ', this.currentImageId);
         window.addEventListener('popstate', (e) => {
             console.log('popstate event: ', location.href, e.state);//.hash, e.state
             if (!this.currentImageId && window.location.hash) {

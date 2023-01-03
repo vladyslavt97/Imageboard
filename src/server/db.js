@@ -49,3 +49,23 @@ module.exports.deleteCommentsForImageIdFromDB = (imageid) => {
         WHERE image_id = $1;`, [imageid]);
 };
 
+//delete from response
+module.exports.deleteResponseBasedOnId = (imageid) => {
+    return db.query(`
+        DELETE FROM response 
+        WHERE image_id = $1;`, [imageid]);
+};
+
+
+//2 queries for response
+//select
+module.exports.selectAllFromResponseBasedOnID = (imageId) =>{
+    return db.query(`SELECT * 
+    FROM response
+    WHERE id = $1;`, [imageId]);
+};
+
+module.exports.insertResponseBasedOnId = (reply, usernamereply, imageid) =>{
+    return db.query(`INSERT INTO response (reply, username, comment_id)
+    VALUES ($1, $2, $3) RETURNING *;`, [reply, usernamereply, imageid]);
+};

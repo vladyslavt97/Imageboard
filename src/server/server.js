@@ -12,7 +12,9 @@ const {
     selectAllCommentsFromCommentsDBBasedOnId,
     insertCommentToCommentsDBBasedOnId,
     deleteCommentsForImageIdFromDB,
-    deleteImageFromImagesDB } = require('./db.js');
+    deleteImageFromImagesDB,
+    insertResponseBasedOnId,
+    selectAllFromResponseBasedOnID } = require('./db.js');
 
 
 app.use(express.static(path.join(__dirname, "..", "client")));
@@ -57,7 +59,21 @@ app.get("/comment/:id", (req,res) => {
         });
 });
 
+//reply get (to see all replies)
+app.get("/comment/:id", (req,res) => {
+    const replyId = req.params.id;
+    selectAllFromResponseBasedOnID(replyId)
+        .then((data) => {
+            const comments = data.rows;
+            res.json({success: true, theComments: comments});
+        })
+        .catch(err=>{
+            console.log('error of comments get..: ', err);
+            res.json({success: false});
+        });
+});
 
+//                              POST                            //
 app.post('/add-image', uploader.single('filee'), fileUpload, (req, res) => {
     let url = res.locals.fileUrl;
     let title = req.body.filename;
@@ -93,19 +109,32 @@ app.post('/comment', (req, res) => {
             res.json({success: false});
         });
 });
+//
+//post for inserting a comment
+app.post('/reply', (req, res) => {
+    const { reply, usernamereply, imageid } = req.body;
+    insertResponseBasedOnId(reply, usernamereply, imageid)
+        .then((data) => {
+            res.json({ success: true, myReply: data.rows[0]});
+        })
+        .catch(err => {
+            console.log('err in POST insert comment: ', err);
+            res.json({success: false});
+        });
+});
 
 //
 app.delete('/image/:id', (req, res) => {
     const imageid = req.params.id;
-    console.log('imageid: ', imageid);  
+    // console.log('imageid: ', imageid);  
     deleteCommentsForImageIdFromDB(imageid)
         .then(() => {
-            console.log('deleted from images');
+            // console.log('deleted from images');
             return deleteImageFromImagesDB(imageid);
         })
         .then((data) => {
             res.json(data);
-            console.log('deleted from comments');
+            // console.log('deleted from comments');
         })
         .catch(err => {
             console.log('err in delete queries: ', err);

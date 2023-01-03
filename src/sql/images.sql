@@ -17,6 +17,14 @@ CREATE TABLE comments(
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE response(
+    id SERIAL PRIMARY KEY,
+    reply TEXT NOT NULL,
+    username VARCHAR NOT NULL,
+    comment_id INTEGER NOT NULL REFERENCES images(id),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
 INSERT INTO images (url, username, title, description) VALUES (
     'https://s3.amazonaws.com/imageboard/jAVZmnxnZ-U95ap2-PLliFFF7TO0KqZm.jpg',
     'funkychicken',
