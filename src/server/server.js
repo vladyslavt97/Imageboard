@@ -95,16 +95,17 @@ app.post('/comment', (req, res) => {
 });
 
 //
-app.delete('/image', (req, res) => {
-    const {imageid} = req.body;
+app.delete('/image/:id', (req, res) => {
+    const imageid = req.params.id;
     console.log('imageid: ', imageid);  
-    deleteImageFromImagesDB(imageid)
+    deleteCommentsForImageIdFromDB(imageid)
         .then(() => {
             console.log('deleted from images');
-            return deleteCommentsForImageIdFromDB(imageid);
+            return deleteImageFromImagesDB(imageid);
         })
-        .then(() => {
-            console.log('deleted from comments', );
+        .then((data) => {
+            res.json(data);
+            console.log('deleted from comments');
         })
         .catch(err => {
             console.log('err in delete queries: ', err);

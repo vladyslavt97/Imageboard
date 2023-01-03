@@ -36,16 +36,16 @@ module.exports.insertCommentToCommentsDBBasedOnId = (comment, usernamecomment, i
 
 //queries to delete the image from images AND comments DBs
 //delete images
-module.exports.deleteImageFromImagesDB = (imageID) => { 
+module.exports.deleteImageFromImagesDB = (imageid) => { 
     return db.query(`
         DELETE FROM images 
-        WHERE id = $1;`, [imageID]);
+        WHERE id = $1;`, [imageid]);
 };
 
 //delete from comments
-module.exports.deleteCommentsForImageIdFromDB = (imageID) => {
+module.exports.deleteCommentsForImageIdFromDB = (imageid) => {
     return db.query(`
         DELETE FROM comments 
-        WHERE image_id = $1;`, [imageID]);
+        WHERE image_id = $1;`, [imageid]);
 };
 

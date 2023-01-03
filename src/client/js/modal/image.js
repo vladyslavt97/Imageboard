@@ -20,11 +20,13 @@ export const imageSummaryComponent = {
 
     // ------COMMUNCATION BETWEEN Parents and Child Components------
     props: ['imageid', 'savedtime'], // Properties that are passed in from parent
-    emits: ['close'], // removed the imagechanged
+    emits: ['close', 'delete'], // removed the imagechanged
     
     data: () => {
         return {
             image: {},
+            value: 0,
+            images: []
         };
     },
     methods: {
@@ -38,14 +40,14 @@ export const imageSummaryComponent = {
             event.preventDefault();
             this.$emit('close');
 
-            fetch('/image', {
+            fetch(`/image/${this.imageid}`, {
                 method: 'DELETE', 
             })
-                .then(response => 
-                    response.json())
-                .then((data) => {
-                    this.$emit('close');
-                    console.log('deleted', data);
+                .then(response => {
+                    response.json();
+                })
+                .then(() => {
+                    this.$emit('delete');
                 })
                 .catch((error) => {
                     console.error('Error in fetch delete:', error);

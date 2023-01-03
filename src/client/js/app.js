@@ -3,6 +3,7 @@ import * as Vue from './vue.js';
 // import {image} from 'image.js';//not used
 import { imageSummaryComponent } from './modal/image.js';
 // import { showerror } from './showerror/showerror.js';
+
 Vue.createApp({
     data: () => {
         return {
@@ -24,6 +25,7 @@ Vue.createApp({
             // usernamecomment: '',
             filteredImages: [],
             index: 0,
+            currentImageId: null
         };
     },
     methods: {
@@ -45,7 +47,6 @@ Vue.createApp({
                     return res.json();
                 })
                 .then(alldata => {
-                    console.log(this.images.length);
                     if (this.images.length > 5){
                         this.images.unshift(alldata.myObj);
                         this.images.pop();
@@ -74,28 +75,54 @@ Vue.createApp({
             });
             this.savedDate = formattedDate;
             this.showModal = true;
+            history.pushState({}, '', `/#${this.imageId}`);
+            // this.currentUserID = this.imageId;
+            this.showModal = true;
         },
+
         handleCloseEvent() {
+            history.pushState({}, '', `/`);
+            // this.currentUserID = this.imageId;
             this.showModal = false;
         },
+        handleImageDeletion(){
+            console.log('imageid', this.imageId);
+            console.log('images', this.images);
+            this.value = this.images.findIndex(image => image.id === this.imageId);
+            console.log('index: ', this.value);
+            // this.images = this.images.filter(item => item !== this.value);
+            this.images.splice(this.value, 1);    
+            console.log('ti: ', this.images);
+        },
             
-        
         morePictures(event){
             event.preventDefault();
-            // let index = 6;
-            // this.filteredImages = this.images.slice(0, this.index + 6);
             this.index += 6;
-            // this.filteredImages = this.images;
-            // console.log('length: ', this.images.length += index);
-            // console.log('length: ', this.images.slice(0, 6 += index));
-            if (this.images.length < 6){//need to compare the current length with the length of all images in db
+            if (this.images.length < 6){
                 this.showMore = false;
                 console.log("hide the more button");
             } else {
-                this.images.push();//add 6 more to the array
+                this.images.push();
             }
             
         }
+    },
+    mounted(){
+        this.currentImageId = window.location.hash.slice(1);
+        console.log('currentImageId: ', this.currentImageId);
+        window.addEventListener('popstate', (e) => {
+            console.log('popstate event: ', location.href, e.state);//.hash, e.state
+            if (!this.currentImageId && window.location.hash) {
+                console.log('not seen');
+                this.currentImageId = window.location.hash.split("#")[1];
+                this.showModal = true;
+
+            }
+            if (this.currentImageId && !window.location.hash) {
+                this.currentImageId = null;
+                this.showModal = false;
+            }
+        });
     },
     created() {
         fetch('/images')
