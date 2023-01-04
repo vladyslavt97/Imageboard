@@ -37,7 +37,6 @@ app.get("/images", (req, res) => {
 
 app.get("/image/:id", (req,res) => {
     const imageId = req.params.id;
-    console.log('error', req.params);
     selectImageFromImageboardBasedOnID(imageId)
         .then((alldata) => {
             res.json({success: true, myData: alldata.rows[0]});
@@ -116,7 +115,6 @@ app.post('/comment', (req, res) => {
 //
 //post for inserting a comment
 app.post('/reply', (req, res) => {
-    console.log('re.b:', req.body);
     const { reply, usernamereply, commentid, imageid } = req.body;
     insertResponseBasedOnId(reply, usernamereply, commentid, imageid)
         .then((data) => {

@@ -93,11 +93,14 @@ Vue.createApp({
         morePictures(event){
             event.preventDefault();
             this.index += 6;
+            console.log('this.images.length', this.images.length);
             if (this.images.length < 6){
-                this.showMore = false;
+                // this.showMore = false;
                 console.log("hide the more button");
             } else {
                 this.images.push();
+                console.log('ta ya console logy');
+                this.showMore = false;
             }
             
         }
