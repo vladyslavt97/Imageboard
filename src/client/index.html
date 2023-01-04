@@ -38,7 +38,7 @@
             </form>
             <ul id="imagesul">
                 <li v-for="i in images.slice(0,6 + index)" v-on:click="() => handleClickOnImage(i)" class="image">
-                    <img v-bind:src="i.url" v-bind:alt="i.title" v-bind:id="i.id">
+                    <img v-bind:src="i.url" v-bind:alt="i.title" v-bind:key="i.id" v-bind:id="i.id">
                     <h2 id="description">{{i.title}}</h2>
                 </li>
             </ul>
