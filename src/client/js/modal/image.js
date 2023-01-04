@@ -21,12 +21,14 @@ export const imageSummaryComponent = {
     // ------COMMUNCATION BETWEEN Parents and Child Components------
     props: ['imageid', 'savedtime'], // Properties that are passed in from parent
     emits: ['close', 'delete'], // removed the imagechanged
-    
+    //implement a new listener for popstate
+    //change the way the fetch runs based on url id
     data: () => {
         return {
             image: {},
             value: 0,
-            images: []
+            images: [],
+            currentImageId: null,
         };
     },
     methods: {
@@ -54,6 +56,8 @@ export const imageSummaryComponent = {
         }
     },
     mounted(){
+        this.currentImageId = window.location.hash.slice(1);
+        console.log('currentImageId', this.currentImageId);
         fetch(`/image/${this.imageid}`, {
             method: 'GET', 
         })
