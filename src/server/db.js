@@ -53,7 +53,7 @@ module.exports.deleteCommentsForImageIdFromDB = (imageid) => {
 module.exports.deleteResponseBasedOnId = (imageid) => {
     return db.query(`
         DELETE FROM response 
-        WHERE comment_id = $1;`, [imageid]);
+        WHERE image_id = $1;`, [imageid]);
 };
 
 

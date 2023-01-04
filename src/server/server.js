@@ -37,6 +37,7 @@ app.get("/images", (req, res) => {
 
 app.get("/image/:id", (req,res) => {
     const imageId = req.params.id;
+    console.log('error', req.params);
     selectImageFromImageboardBasedOnID(imageId)
         .then((alldata) => {
             res.json({success: true, myData: alldata.rows[0]});
