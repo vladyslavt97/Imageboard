@@ -2,7 +2,7 @@ const path = require("path");
 const express = require("express");
 const app = express();
 require('dotenv').config();
-const { PORT = 3000 } = process.env;
+const { PORT = 3002 } = process.env;
 const { uploader, fileUpload } = require('./file-upload');
 
 const { 
